@@ -11,19 +11,20 @@ class TestAddAddress(unittest.TestCase):
         self.wd.implicitly_wait(30)
     
     def test_add_address(self):
+        #to jest łącze do sterownika webdriver.Firefox
         wd = self.wd
-        #open home page
-        wd.get("http://localhost:8080/addressbook/")
-        #login
-        wd.find_element_by_name("user").click()
-        wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys("admin")
-        wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys("secret")
-        wd.find_element_by_xpath("//input[@value='Login']").click()
-        #init address creation
+        self.open_home_page(wd)#could we also import existing methods from test_add_group?
+        self.login(wd)
+        self.add_new_address(wd)
+        self.logout(wd)
+
+    def logout(self, wd):
+        wd.find_element_by_link_text("Logout").click()
+
+    def add_new_address(self, wd):
+        # init address creation
         wd.find_element_by_link_text("add new").click()
-        #fill in address form
+        # fill in address form
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys("fname")
@@ -80,11 +81,20 @@ class TestAddAddress(unittest.TestCase):
         wd.find_element_by_name("phone2").send_keys("home")
         wd.find_element_by_name("notes").clear()
         wd.find_element_by_name("notes").send_keys("notes")
-        #submit address creation
+        # submit address creation
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
-        #logout
-        wd.find_element_by_link_text("Logout").click()
-    
+
+    def login(self, wd):
+        wd.find_element_by_name("user").click()
+        wd.find_element_by_name("user").clear()
+        wd.find_element_by_name("user").send_keys("admin")
+        wd.find_element_by_name("pass").clear()
+        wd.find_element_by_name("pass").send_keys("secret")
+        wd.find_element_by_xpath("//input[@value='Login']").click()
+
+    def open_home_page(self, wd):
+        wd.get("http://localhost:8080/addressbook/")
+
     def is_element_present(self, how, what):
         try: self.wd.find_element(by=how, value=what)
         except NoSuchElementException as e: return False

@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-
 import pytest
 from group import Group
 from application import Application
 
-"""@... zamienia zwykłą funkcję na inicjalizator fikstury"""
-@pytest.fixture()
+
+#inicjalizator fikstury
+@pytest.fixture
 def app(request):
-    fixture = Application
-    request.addfinalizer(fixture.destroy)
+    fixture = Application()
+    request = addfinalizer(fixture.destroy)
     return fixture
 
 

@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 import pytest
 from address import Address
-from application import Application
+from fixture.application import Application
 
 
 # inicjalizator fikstury
 @pytest.fixture
 def app(request):
-    fixture = Application
+    fixture = Application()
     request.addfinalizer(fixture.destroy)
     return fixture
 

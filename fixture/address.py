@@ -1,4 +1,5 @@
 from selenium.webdriver.support.ui import Select
+from keyboard import press
 
 
 class AddressHelper:
@@ -66,3 +67,9 @@ class AddressHelper:
         wd.find_element_by_name("notes").send_keys(address.notes)
         # submit address creation
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
+
+    def delete_first_address(self):
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        press('enter')

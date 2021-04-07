@@ -73,3 +73,10 @@ class AddressHelper:
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         press('enter')
+
+    def modify_first_address(self):
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
+        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        wd.find_element_by_name("firstname").click()
+        wd.find_element_by_name("firstname").send_keys('modified')

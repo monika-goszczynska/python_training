@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 class Address:
 
-    def __init__(self, first_name, middle_name, last_name, nickname, title, company, address, home_telephone,
-                        mobile_telephone, work_telephone, fax, email, email2, email3, homepage, birth_day, birth_month,
-                        birth_year, anni_day, anni_month, anni_year, second_address, home, notes):
+    def __init__(self, first_name=None, middle_name=None, last_name=None, nickname=None, title=None, company=None,
+                        address=None, home_telephone=None, mobile_telephone=None, work_telephone=None, fax=None,
+                        email=None, email2=None, email3=None, homepage=None, birth_day=None, birth_month=None,
+                        birth_year=None, anni_day=None, anni_month=None, anni_year=None, second_address=None,
+                        home=None, notes=None):
         self.first_name = first_name
         self.middle_name = middle_name
         self.last_name = last_name

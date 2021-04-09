@@ -1,5 +1,4 @@
 from selenium.webdriver.support.ui import Select
-from keyboard import press
 
 
 class AddressHelper:
@@ -72,7 +71,7 @@ class AddressHelper:
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
-        press('enter')
+        wd.switch_to_alert().accept()
 
     def modify_first_address(self):
         wd = self.app.wd

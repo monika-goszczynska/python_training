@@ -13,6 +13,12 @@ class AddressHelper:
             wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys(text)
 
+    def change_date_value(self, field_name, text):
+        wd = self.app.wd
+        if text is not None:
+            wd.find_element_by_name(field_name).click()
+            Select(wd.find_element_by_name(field_name)).select_by_visible_text(text)
+
     def fill_address_form(self, address):
         wd = self.app.wd
         self.change_field_value("firstname", address.first_name)
@@ -30,30 +36,15 @@ class AddressHelper:
         self.change_field_value("email2", address.email2)
         self.change_field_value("email3", address.email3)
         self.change_field_value("homepage", address.homepage)
-        # change all dates!!!
-        self.change_field_value("bday", address.birth_day)
-        self.change_field_value("bmonth", address.birth_month)
+        self.change_date_value("bday", address.birth_day)
+        self.change_date_value("bmonth", address.birth_month)
         self.change_field_value("byear", address.birth_year)
-        self.change_field_value("aday", address.anni_day)
-        self.change_field_value("amonth", address.anni_month)
+        self.change_date_value("aday", address.anni_day)
+        self.change_date_value("amonth", address.anni_month)
         self.change_field_value("ayear", address.anni_year)
         self.change_field_value("address2", address.second_address)
         self.change_field_value("phone2", address.home)
         self.change_field_value("notes", address.notes)
-        # wd.find_element_by_name("bday").click()
-        # Select(wd.find_element_by_name("bday")).select_by_visible_text(address.birth_day)
-        # wd.find_element_by_name("bmonth").click()
-        # Select(wd.find_element_by_name("bmonth")).select_by_visible_text(address.birth_month)
-        # wd.find_element_by_name("byear").click()
-        # wd.find_element_by_name("byear").clear()
-        # wd.find_element_by_name("byear").send_keys(address.birth_year)
-        # wd.find_element_by_name("aday").click()
-        # Select(wd.find_element_by_name("aday")).select_by_visible_text(address.anni_day)
-        # wd.find_element_by_name("amonth").click()
-        # Select(wd.find_element_by_name("amonth")).select_by_visible_text(address.anni_month)
-        # wd.find_element_by_name("ayear").click()
-        # wd.find_element_by_name("ayear").clear()
-        # wd.find_element_by_name("ayear").send_keys(address.anni_year)
 
     def new(self, address):
         # to jest łącze do sterownika webdriver.Firefox

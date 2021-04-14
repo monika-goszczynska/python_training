@@ -6,6 +6,11 @@ class AddressHelper:
     def __init__(self, app):
         self.app = app
 
+    def open_home_page(self):
+        wd = self.app.wd
+        if not wd.current_url.endswith("addressbook/"):
+            wd.find_element_by_link_text("home").click()
+
     def change_field_value(self, field_name, text):
         wd = self.app.wd
         if text is not None:
@@ -54,6 +59,7 @@ class AddressHelper:
         self.fill_address_form(address)
         # submit address creation
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
+        self.open_home_page()
 
     def select_first_address(self):
         wd = self.app.wd
@@ -64,6 +70,7 @@ class AddressHelper:
         self.select_first_address()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
+        self.open_home_page()
 
     def modify_first_address(self, new_address_data):
         wd = self.app.wd
@@ -74,7 +81,9 @@ class AddressHelper:
         # submit modification
         wd.find_element_by_name("update").click()
         # wd.switch_to_alert().accept()
+        self.open_home_page()
 
     def count(self):
         wd = self.app.wd
+        self.open_home_page()
         return len(wd.find_elements_by_name("selected[]"))

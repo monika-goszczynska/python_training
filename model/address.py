@@ -5,7 +5,7 @@ class Address:
                         address=None, home_telephone=None, mobile_telephone=None, work_telephone=None, fax=None,
                         email=None, email2=None, email3=None, homepage=None, birth_day=None, birth_month=None,
                         birth_year=None, anni_day=None, anni_month=None, anni_year=None, second_address=None,
-                        home=None, notes=None):
+                        home=None, notes=None, id=None):
         self.first_name = first_name
         self.middle_name = middle_name
         self.last_name = last_name
@@ -30,3 +30,4 @@ class Address:
         self.second_address = second_address
         self.home = home
         self.notes = notes
+        self.id = id

@@ -1,5 +1,5 @@
 from selenium.webdriver.support.ui import Select
-
+from model.address import Address
 
 class AddressHelper:
 
@@ -87,3 +87,13 @@ class AddressHelper:
         wd = self.app.wd
         self.open_home_page()
         return len(wd.find_elements_by_name("selected[]"))
+
+    def get_address_list(self):
+        wd = self.app.wd
+        self.open_home_page()
+        addresses = []
+        for element in wd.find_elements_by_css_selector("td.center"):
+            text = element.title
+            id = element.value
+            addresses.append(Address(first_name=text, id=id))
+        return addresses

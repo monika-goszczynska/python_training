@@ -92,8 +92,8 @@ class AddressHelper:
         wd = self.app.wd
         self.open_home_page()
         addresses = []
-        for element in wd.find_elements_by_css_selector("td.center"):
-            text = element.title
-            id = element.value
-            addresses.append(Address(first_name=text, id=id))
+        for element in wd.find_elements_by_name("entry"):
+            text = element.find_element_by_tag_name("td")
+            id = element.find_element_by_name("selected[]").get_attribute("id")
+            addresses.append(Address(last_name=text, id=id))
         return addresses

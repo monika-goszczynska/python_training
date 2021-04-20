@@ -8,3 +8,12 @@ class Group:
         self.header = header
         self.footer = footer
         self.id = id
+
+    # ta funkcja okresla jak bedzie wygladac obiekt przy wyprowadzeniu na konsole - representation
+    def __repr__(self):
+        return "%s:%s" % (self.id, self.name)
+
+    # biezacy obiekt self jest porownywany z innym obiektem, ktory jest przyjmowany jako parametr
+    # nastepuje porownanie wg sensu, a nie fizycznego rozmieszczenia obiektow
+    def __eq__(self, other):
+        return self.id == other.id and self.name == other.name

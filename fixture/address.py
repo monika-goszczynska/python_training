@@ -94,7 +94,7 @@ class AddressHelper:
         addresses = []
         for element in wd.find_elements_by_name("entry"):
             cells = element.find_elements_by_tag_name("td")
-            text = cells[1].text
-            id = element.find_element_by_name("selected[]").get_attribute("id")
-            addresses.append(Address(last_name=text, id=id))
+            last_name = cells[0].text
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            addresses.append(Address(last_name=last_name, id=id))
         return addresses

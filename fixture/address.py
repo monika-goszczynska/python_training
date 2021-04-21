@@ -93,7 +93,8 @@ class AddressHelper:
         self.open_home_page()
         addresses = []
         for element in wd.find_elements_by_name("entry"):
-            text = element.find_element_by_tag_name("td")
+            cells = element.find_elements_by_tag_name("td")
+            text = cells[1].text
             id = element.find_element_by_name("selected[]").get_attribute("id")
             addresses.append(Address(last_name=text, id=id))
         return addresses

@@ -60,6 +60,7 @@ class AddressHelper:
         # submit address creation
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
         self.open_home_page()
+        self.address_cache = None
 
     def select_first_address(self):
         wd = self.app.wd
@@ -71,6 +72,7 @@ class AddressHelper:
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
         self.open_home_page()
+        self.address_cache = None
 
     def modify_first_address(self, new_address_data):
         wd = self.app.wd
@@ -82,19 +84,23 @@ class AddressHelper:
         wd.find_element_by_name("update").click()
         # wd.switch_to_alert().accept()
         self.open_home_page()
+        self.address_cache = None
 
     def count(self):
         wd = self.app.wd
         self.open_home_page()
         return len(wd.find_elements_by_name("selected[]"))
 
+    address_cache = None
+
     def get_address_list(self):
-        wd = self.app.wd
-        self.open_home_page()
-        addresses = []
-        for element in wd.find_elements_by_name("entry"):
-            cells = element.find_elements_by_tag_name("td")
-            last_name = cells[0].text
-            id = element.find_element_by_name("selected[]").get_attribute("value")
-            addresses.append(Address(last_name=last_name, id=id))
-        return addresses
+        if self.address_cache is None:
+            wd = self.app.wd
+            self.open_home_page()
+            self.address_cache = []
+            for element in wd.find_elements_by_name("entry"):
+                cells = element.find_elements_by_tag_name("td")
+                last_name = cells[0].text
+                id = element.find_element_by_name("selected[]").get_attribute("value")
+                self.address_cache.append(Address(last_name=last_name, id=id))
+        return list(self.address_cache)

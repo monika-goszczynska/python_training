@@ -100,7 +100,8 @@ class AddressHelper:
             self.address_cache = []
             for element in wd.find_elements_by_name("entry"):
                 cells = element.find_elements_by_tag_name("td")
-                last_name = cells[0].text
-                id = element.find_element_by_name("selected[]").get_attribute("value")
+                last_name = cells[1].text
+                id = element.find_element_by_name("selected[]").get_attribute("id")
                 self.address_cache.append(Address(last_name=last_name, id=id))
+        # zwracana jest kopia cache
         return list(self.address_cache)

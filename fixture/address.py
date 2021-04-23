@@ -116,3 +116,5 @@ class AddressHelper:
                 self.address_cache.append(Address(last_name=last_name, id=id))
         # zwracana jest kopia cache
         return list(self.address_cache)
+
+    def get_address_info_from_edit_page(self, index):

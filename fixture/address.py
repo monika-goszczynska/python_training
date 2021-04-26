@@ -1,4 +1,5 @@
 from selenium.webdriver.support.ui import Select
+import re
 from model.address import Address
 
 class AddressHelper:
@@ -48,7 +49,7 @@ class AddressHelper:
         self.change_date_value("amonth", address.anni_month)
         self.change_field_value("ayear", address.anni_year)
         self.change_field_value("address2", address.second_address)
-        self.change_field_value("phone2", address.home)
+        self.change_field_value("phone2", address.phone2)
         self.change_field_value("notes", address.notes)
 
     def new(self, address):
@@ -87,15 +88,25 @@ class AddressHelper:
 
     def modify_address_by_index(self, index, new_address_data):
         wd = self.app.wd
-        self.select_address_by_index(index)
-        # open modification form
-        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        self.open_address_to_edit_by_index(index)
         self.fill_address_form(new_address_data)
         # submit modification
         wd.find_element_by_name("update").click()
         # wd.switch_to_alert().accept()
         self.open_home_page()
         self.address_cache = None
+
+    def open_address_to_edit_by_index(self, index):
+        wd = self.app.wd
+        self.select_address_by_index(index)
+        # open modification form
+        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+
+    def open_address_view_by_index(self, index):
+        wd = self.app.wd
+        self.select_address_by_index(index)
+        # open view details
+        wd.find_element_by_xpath("//img[@alt='Details']").click()
 
     def count(self):
         wd = self.app.wd
@@ -111,10 +122,39 @@ class AddressHelper:
             self.address_cache = []
             for element in wd.find_elements_by_name("entry"):
                 cells = element.find_elements_by_tag_name("td")
+                first_name = cells[2].text
                 last_name = cells[1].text
                 id = element.find_element_by_name("selected[]").get_attribute("id")
-                self.address_cache.append(Address(last_name=last_name, id=id))
+                all_phones = cells[5].text.splitlines()
+                self.address_cache.append(Address(last_name=last_name, first_name=first_name, id=id,
+                                                  home_telephone=all_phones[0], mobile_telephone=all_phones[1],
+                                                  work_telephone=all_phones[2], phone2=all_phones[3]))
         # zwracana jest kopia cache
         return list(self.address_cache)
 
     def get_address_info_from_edit_page(self, index):
+        wd = self.app.wd
+        self.open_address_to_edit_by_index(index)
+        first_name = wd.find_element_by_name("firstname").get_attribute("value")
+        last_name = wd.find_element_by_name("lastname").get_attribute("value")
+        # to jest ukryte pole w przegladarce
+        id = wd.find_element_by_name("id").get_attribute("value")
+        home_telephone = wd.find_element_by_name("home").get_attribute("value")
+        work_telephone = wd.find_element_by_name("work").get_attribute("value")
+        mobile_telephone = wd.find_element_by_name("mobile").get_attribute("value")
+        phone2 = wd.find_element_by_name("phone2").get_attribute("value")
+        return Address(first_name=first_name, last_name=last_name, id=id,
+                       home_telephone=home_telephone, mobile_telephone=mobile_telephone,
+                       work_telephone=work_telephone, phone2=phone2)
+
+    def get_address_from_view_page(self, index):
+        wd = self.app.wd
+        self.open_address_view_by_index(index)
+        text = wd.find_element_by_id("content").text
+        home_telephone = re.search("H: (.*)", text).group(1)
+        work_telephone = re.search("W: (.*)", text).group(1)
+        mobile_telephone = re.search("M: (.*)", text).group(1)
+        phone2 = re.search("P: (.*)", text).group(1)
+        return Address(home_telephone=home_telephone, mobile_telephone=mobile_telephone,
+                       work_telephone=work_telephone, phone2=phone2)
+

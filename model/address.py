@@ -5,7 +5,7 @@ from sys import maxsize
 class Address:
 
     def __init__(self, first_name=None, middle_name=None, last_name=None, nickname=None, title=None, company=None,
-                        address=None, home_telephone=None, mobile_telephone=None, work_telephone=None, fax=None,
+                        address=None, all_phones_from_home_page=None, home_telephone=None, mobile_telephone=None, work_telephone=None, fax=None,
                         email=None, email2=None, email3=None, homepage=None, birth_day=None, birth_month=None,
                         birth_year=None, anni_day=None, anni_month=None, anni_year=None, second_address=None,
                         phone2=None, notes=None, id=None):
@@ -33,6 +33,7 @@ class Address:
         self.second_address = second_address
         self.phone2 = phone2
         self.notes = notes
+        self.all_phones_from_home_page = all_phones_from_home_page
         self.id = id
 
         # ta funkcja okresla jak bedzie wygladac obiekt przy wyprowadzeniu na konsole - representation

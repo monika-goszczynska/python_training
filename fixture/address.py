@@ -128,10 +128,8 @@ class AddressHelper:
                 first_name = cells[2].text
                 last_name = cells[1].text
                 id = element.find_element_by_name("selected[]").get_attribute("id")
-                all_phones = cells[5].text.splitlines()
-                self.address_cache.append(Address(last_name=last_name, first_name=first_name, id=id,
-                                                  home_telephone=all_phones[0], mobile_telephone=all_phones[1],
-                                                  work_telephone=all_phones[2], phone2=all_phones[3]))
+                all_phones = cells[5].text
+                self.address_cache.append(Address(last_name=last_name, first_name=first_name, id=id, all_phones_from_home_page=all_phones))
         # zwracana jest kopia cache
         return list(self.address_cache)
 

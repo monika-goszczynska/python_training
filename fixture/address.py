@@ -34,7 +34,7 @@ class AddressHelper:
         self.change_field_value("title", address.title)
         self.change_field_value("company", address.company)
         self.change_field_value("address", address.address)
-        self.change_field_value("home", address.home)
+        self.change_field_value("home", address.home_telephone)
         self.change_field_value("mobile", address.mobile_telephone)
         self.change_field_value("work", address.work_telephone)
         self.change_field_value("fax", address.fax)
@@ -98,15 +98,18 @@ class AddressHelper:
 
     def open_address_to_edit_by_index(self, index):
         wd = self.app.wd
-        self.select_address_by_index(index)
+        row = wd.find_elements_by_name("entry")[index]
+        edit_cell = row.find_elements_by_tag_name("td")[7]
         # open modification form
-        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        edit_cell.find_element_by_tag_name("a").click()
+
 
     def open_address_view_by_index(self, index):
         wd = self.app.wd
-        self.select_address_by_index(index)
+        row = wd.find_elements_by_name("entry")[index]
+        view_cell = row.find_elements_by_tag_name("td")[6]
         # open view details
-        wd.find_element_by_xpath("//img[@alt='Details']").click()
+        view_cell.find_element_by_tag_name("a").click()
 
     def count(self):
         wd = self.app.wd

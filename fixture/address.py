@@ -130,8 +130,10 @@ class AddressHelper:
                 id = element.find_element_by_name("selected[]").get_attribute("id")
                 all_phones = cells[5].text
                 all_emails = cells[4].text
+                address = cells[3].text
                 self.address_cache.append(Address(last_name=last_name, first_name=first_name, id=id,
-                                                  all_phones_from_home_page=all_phones, all_emails_from_home_page=all_emails))
+                                                  all_phones_from_home_page=all_phones, all_emails_from_home_page=all_emails,
+                                                  address=address))
         # zwracana jest kopia cache
         return list(self.address_cache)
 
@@ -149,10 +151,11 @@ class AddressHelper:
         email = wd.find_element_by_name("email").get_attribute("value")
         email2 = wd.find_element_by_name("email2").get_attribute("value")
         email3 = wd.find_element_by_name("email3").get_attribute("value")
+        address = wd.find_element_by_name("address").text
         return Address(first_name=first_name, last_name=last_name, id=id,
                        home_telephone=home_telephone, mobile_telephone=mobile_telephone,
                        work_telephone=work_telephone, phone2=phone2, email=email,
-                       email2=email2, email3=email3)
+                       email2=email2, email3=email3, address=address)
 
     def get_address_from_view_page(self, index):
         wd = self.app.wd

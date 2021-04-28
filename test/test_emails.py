@@ -8,4 +8,5 @@ def test_emails_on_home_page(app):
 
 
 def merge_emails_like_on_home_page(address):
-    return "\n".join(filter(lambda x: x != "", (filter(lambda x: x is not None, [address.email, address.email2, address.email3]))))
+    return "\n".join(filter(lambda x: x != "",
+                            (filter(lambda x: x is not None, [address.email, address.email2, address.email3]))))

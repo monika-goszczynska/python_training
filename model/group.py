@@ -14,7 +14,7 @@ class Group:
 
     # ta funkcja okresla jak bedzie wygladac obiekt przy wyprowadzeniu na konsole - representation
     def __repr__(self):
-        return "%s:%s" % (self.id, self.name)
+        return "%s:%s;%s;%s" % (self.id, self.name, self.header, self.footer)
 
     # biezacy obiekt self jest porownywany z innym obiektem, ktory jest przyjmowany jako parametr
     # nastepuje porownanie wg sensu, a nie fizycznego rozmieszczenia obiektow

@@ -6,7 +6,7 @@ import string
 
 
 def random_string(prefix, maxlen):
-    symbols = string.digits + string.ascii_letters + string.punctuation + " "*10
+    symbols = string.digits + string.ascii_letters
     return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
 
 

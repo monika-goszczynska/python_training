@@ -19,7 +19,7 @@ f = "data/groups.json"
 for o, a in opts:
     if o == "-n":
         n = int(a)
-    elif f == "-f":
+    elif o == "-f":
         f = a
 
 

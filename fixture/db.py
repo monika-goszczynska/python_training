@@ -25,17 +25,17 @@ class DbFixture:
             cursor.close()
         return list
 
-    #def get_address_list(self):
-    #    list = []
-    #    cursor = self.connection.cursor()
-    #    try:
-    #        cursor.execute("select id, firstname, lastname from addressbook")
-    #        for row in cursor:
-    #            (id, first_name, last_name) = row
-    #            list.append(Address(id=str(id), first_name=first_name, last_name=last_name)
-    #    finally:
-    #        cursor.close()
-    #    return list
+    def get_address_list(self):
+        list = []
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute("select id, firstname, lastname from addressbook where deprecated='0000-00-00 00:00:00'")
+            for row in cursor:
+                (id, firstname, lastname) = row
+                list.append(Address(id=str(id), first_name=firstname, last_name=lastname))
+        finally:
+                cursor.close()
+        return list
 
     def destroy(self):
         self.connection.close()

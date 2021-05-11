@@ -11,7 +11,7 @@ class DbFixture:
         self.name = name
         self.user = user
         self.password = password
-        self.connection = pymysql.connect(host=host, database=name, user=user, password=password)
+        self.connection = pymysql.connect(host=host, database=name, user=user, password=password, autocommit=True)
 
     def get_group_list(self):
         list = []
@@ -25,17 +25,17 @@ class DbFixture:
             cursor.close()
         return list
 
-    def get_address_list(self):
-        list = []
-        cursor = self.connection.cursor()
-        try:
-            cursor.execute("select id, firstname, lastname from addressbook")
-            for row in cursor:
-                (id, first_name, last_name) = row
-                list.append(Address(id=str(id), first_name=first_name, last_name=last_name)
-        finally:
-            cursor.close()
-        return list
+    #def get_address_list(self):
+    #    list = []
+    #    cursor = self.connection.cursor()
+    #    try:
+    #        cursor.execute("select id, firstname, lastname from addressbook")
+    #        for row in cursor:
+    #            (id, first_name, last_name) = row
+    #            list.append(Address(id=str(id), first_name=first_name, last_name=last_name)
+    #    finally:
+    #        cursor.close()
+    #    return list
 
     def destroy(self):
         self.connection.close()

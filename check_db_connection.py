@@ -1,11 +1,12 @@
-from fixture.db import DbFixture
+from fixture.orm import ORMFixture
+from model.group import Group
 
-db = DbFixture(host='127.0.0.1', name='addressbook', user='root', password='')
+db = ORMFixture(host='127.0.0.1', name='addressbook', user='root', password='')
 
 try:
-    addresses = db.get_address_list()
-    for address in addresses:
-        print(address)
-    print(len(addresses))
+    l = db.get_addresses_in_group(Group(id='26'))
+    for item in l:
+        print(item)
+    print(len(l))
 finally:
-    db.destroy()
+    pass # db.destroy()

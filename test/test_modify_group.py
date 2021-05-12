@@ -1,5 +1,5 @@
 from model.group import Group
-import random
+from random import randrange
 
 
 def test_modify_group_name(app, db, check_ui):
@@ -9,7 +9,8 @@ def test_modify_group_name(app, db, check_ui):
     # zapisujemy grupe przed modyf z bazy danych
     old_groups = db.get_group_list()
     #wybieramy losowy element z grupy przed modyf.
-    group = random.choice(old_groups)
+    id = randrange(0, len(old_groups))
+    group = old_groups[id]
     # modyfikujemy grupe
     app.group.modify_group_by_id(group.id, Group(name="newname", header="newheader", footer="newfooter"))
     # zapisujemy grupe po modyf z bazy danych
@@ -17,7 +18,7 @@ def test_modify_group_name(app, db, check_ui):
     # porownujemy dlugosc list
     assert len(old_groups) == len(new_groups)
     # zastepujemy stara grupe zmodyfikowana
-    old_groups[group.id] = group
+    old_groups[id] = group
     # poronujemy stara i nowa grupe
     assert old_groups == new_groups
     if check_ui:

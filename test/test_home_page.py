@@ -1,7 +1,8 @@
 import re
+from model.address import Address
 
 
-def test_data_on_home_page(app):
+def test_address_on_home_page(app):
     # info o kontakcie ze str glownej
     address_from_home_page = app.address.get_address_list()[0]
     # info o kontakcie z formy edytowania
@@ -10,6 +11,12 @@ def test_data_on_home_page(app):
     assert address_from_home_page.last_name == address_from_edit_page.last_name
     assert address_from_home_page.all_phones_from_home_page == merge_phones_like_on_home_page(address_from_edit_page)
     assert address_from_home_page.all_emails_from_home_page == merge_emails_like_on_home_page(address_from_edit_page)
+
+
+def test_addresses_on_home_page(app, db):
+    addresses_from_home_page = app.address.get_address_list()
+    addresses_from_db = db.get_address_list()
+    assert sorted(addresses_from_home_page, key=Address.id_or_max) == sorted(addresses_from_db, key=Address.id_or_max)
 
 
 def clear(s):

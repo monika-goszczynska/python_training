@@ -73,7 +73,7 @@ class AddressHelper:
 
     def select_address_by_id(self, id):
         wd = self.app.wd
-        wd.find_element_by_css_selector("input[id='%s']" % id).click()
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
 
     def delete_first_address(self):
         self.delete_address_by_index(0)
@@ -129,8 +129,9 @@ class AddressHelper:
     def open_address_to_edit_by_id(self, id):
         wd = self.app.wd
         element = wd.find_element_by_css_selector("input[id='%s']" % id)
-        element.find_element_by_xpath("//img[@title='Edit']").click()
-
+        row = element.find_element_by_xpath(".//ancestor::tr")
+        edit_cell = row.find_elements_by_tag_name("td")[7]
+        edit_cell.find_element_by_tag_name("a").click()
 
     def open_address_view_by_index(self, index):
         wd = self.app.wd

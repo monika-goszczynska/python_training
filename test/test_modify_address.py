@@ -11,7 +11,8 @@ def test_modify_first_name(app, db, check_ui):
     app.address.modify_address_by_id(address.id, Address(first_name="QWE", last_name="QWE"))
     new_addresses = db.get_address_list()
     assert len(old_addresses) == len(new_addresses)
-    old_addresses[random_index] = new_addresses[random_index]
+    # old_addresses[random_index] = new_addresses[random_index]
+    old_addresses[random_index] = db.get_address_by_id(address.id)
     assert old_addresses == new_addresses
     if check_ui:
         assert sorted(new_addresses, key=Address.id_or_max) == sorted(app.address.get_address_list(), key=Address.id_or_max)

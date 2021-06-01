@@ -3,9 +3,7 @@ Scenario Outline: Add new group
   Given a group with <name>, <header> and <footer>
   When I add the group to the list
   Then the new group list is equal to the old list  with the added group
-    # Given - przedwarunek
-    # When - wykonywane działanie
-    # Then - wynik
+
 
   Examples:
   | name  | header  | footer  |
